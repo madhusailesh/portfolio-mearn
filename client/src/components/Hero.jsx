@@ -1,10 +1,17 @@
 import { motion } from "framer-motion";
 
-import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
+} from "react-icons/fa";
 
 import Spline from "@splinetool/react-spline";
 
-import { useEffect, useRef } from "react";
+import {
+  useEffect,
+  useRef,
+} from "react";
 
 import gsap from "gsap";
 
@@ -40,7 +47,8 @@ function Hero() {
         lg:pt-0
       "
     >
-      {/* Glow Effects */}
+      
+      {/* TOP LEFT GLOW */}
 
       <div
         className="
@@ -60,6 +68,8 @@ function Hero() {
         "
       ></div>
 
+      {/* BOTTOM RIGHT GLOW */}
+
       <div
         className="
           absolute
@@ -78,7 +88,7 @@ function Hero() {
         "
       ></div>
 
-      {/* Main Container */}
+      {/* GRID */}
 
       <div
         className="
@@ -93,6 +103,7 @@ function Hero() {
           z-10
         "
       >
+        
         {/* LEFT CONTENT */}
 
         <motion.div
@@ -107,24 +118,53 @@ function Hero() {
           transition={{
             duration: 1,
           }}
-          className="text-center lg:text-left"
+          className="
+            text-center
+            lg:text-left
+          "
         >
-          {/* Intro */}
+          
+          {/* HELLO */}
 
-          <p
+          <motion.p
+            initial={{
+              opacity: 0,
+              x: -50,
+            }}
+            animate={{
+              opacity: 1,
+              x: 0,
+            }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+            }}
             className="
               text-green-400
               text-base
               md:text-lg
               mb-4
+              tracking-wide
             "
           >
             HELLO 👋
-          </p>
+          </motion.p>
 
-          {/* Heading */}
+          {/* MAIN HEADING */}
 
-          <h1
+          <motion.h1
+            initial={{
+              opacity: 0,
+              y: 50,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 0.4,
+              duration: 1,
+            }}
             className="
               text-4xl
               sm:text-5xl
@@ -132,26 +172,40 @@ function Hero() {
               lg:text-7xl
               font-bold
               leading-[1.1]
-              max-w-[700px]
+              max-w-[750px]
             "
           >
             I'm{" "}
+
             <span
               className="
                 text-transparent
                 bg-clip-text
                 bg-gradient-to-r
                 from-pink-500
+                via-purple-500
                 to-blue-500
               "
             >
               Madhu Sailesh Sasamal
             </span>
-          </h1>
+          </motion.h1>
 
-          {/* Subtitle */}
+          {/* ROLE */}
 
-          <h2
+          <motion.h2
+            initial={{
+              opacity: 0,
+              y: 40,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 0.6,
+              duration: 1,
+            }}
             className="
               text-xl
               sm:text-2xl
@@ -161,11 +215,23 @@ function Hero() {
             "
           >
             Full Stack Developer
-          </h2>
+          </motion.h2>
 
-          {/* Description */}
+          {/* DESCRIPTION */}
 
-          <p
+          <motion.p
+            initial={{
+              opacity: 0,
+              y: 40,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 0.8,
+              duration: 1,
+            }}
             className="
               mt-6
               text-zinc-400
@@ -179,13 +245,27 @@ function Hero() {
               md:text-lg
             "
           >
-            I build futuristic full stack web experiences with modern
-            technologies, smooth animations, and scalable backend systems.
-          </p>
+            I build futuristic full stack web
+            experiences with modern technologies,
+            smooth animations, realtime systems,
+            and scalable backend architectures.
+          </motion.p>
 
-          {/* Buttons */}
+          {/* BUTTONS */}
 
-          <div
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 40,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 1,
+              duration: 1,
+            }}
             className="
               flex
               flex-col
@@ -197,60 +277,151 @@ function Hero() {
               lg:justify-start
             "
           >
-            {/* Projects Button */}
+            
+            {/* PROJECT BUTTON */}
 
-            <button
+            <motion.a
+              href="#projects"
+              whileHover={{
+                scale: 1.07,
+              }}
+              whileTap={{
+                scale: 0.95,
+              }}
               className="
                 group
                 relative
                 overflow-hidden
-                px-6
-                md:px-8
-                py-3
-                md:py-4
+                px-7
+                md:px-9
+                py-4
                 rounded-full
                 bg-gradient-to-r
                 from-pink-500
+                via-purple-500
                 to-blue-500
-                hover:scale-105
-                transition-all
-                duration-300
+                text-white
+                font-semibold
                 text-sm
                 md:text-base
-                font-semibold
-                shadow-[0_0_30px_rgba(236,72,153,0.35)]
+                shadow-[0_0_35px_rgba(236,72,153,0.45)]
+                flex
+                items-center
+                justify-center
+                gap-2
               "
             >
-              View Projects
-            </button>
+              
+              {/* Shine */}
 
-            {/* Resume Button */}
+              <span
+                className="
+                  absolute
+                  inset-0
+                  -translate-x-full
+                  group-hover:translate-x-full
+                  transition-transform
+                  duration-1000
+                  bg-gradient-to-r
+                  from-transparent
+                  via-white/20
+                  to-transparent
+                "
+              ></span>
 
-            <button
+              <span className="relative z-10">
+                View Projects
+              </span>
+
+              <span
+                className="
+                  relative
+                  z-10
+                  group-hover:translate-x-1
+                  transition
+                "
+              >
+                →
+              </span>
+            </motion.a>
+
+            {/* RESUME BUTTON */}
+
+            <motion.a
+              href="/resume.pdf"
+              download
+              whileHover={{
+                scale: 1.05,
+              }}
+              whileTap={{
+                scale: 0.95,
+              }}
               className="
-                px-6
-                md:px-8
-                py-3
-                md:py-4
+                relative
+                overflow-hidden
+                px-7
+                md:px-9
+                py-4
                 rounded-full
                 border
                 border-zinc-700
                 hover:border-pink-500
-                hover:bg-zinc-900
+                bg-zinc-900/40
+                backdrop-blur-xl
+                hover:bg-zinc-800
                 transition-all
                 duration-300
                 text-sm
                 md:text-base
                 font-semibold
+                flex
+                items-center
+                justify-center
+                gap-2
               "
             >
-              Download Resume
-            </button>
-          </div>
+              
+              {/* Glow */}
 
-          {/* Social Icons */}
+              <div
+                className="
+                  absolute
+                  inset-0
+                  opacity-0
+                  hover:opacity-100
+                  transition
+                  duration-300
+                  bg-gradient-to-r
+                  from-pink-500/10
+                  to-blue-500/10
+                "
+              ></div>
 
-          <div
+              <span className="relative z-10">
+                Download Resume
+              </span>
+
+              <span className="relative z-10">
+                ↓
+              </span>
+            </motion.a>
+          </motion.div>
+
+          {/* SOCIALS */}
+
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 40,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 1.2,
+              duration: 1,
+            }}
             className="
               flex
               gap-5
@@ -260,7 +431,8 @@ function Hero() {
               lg:justify-start
             "
           >
-            {/* GitHub */}
+            
+            {/* GITHUB */}
 
             <a
               href="https://github.com/madhusailesh"
@@ -276,7 +448,7 @@ function Hero() {
               <FaGithub />
             </a>
 
-            {/* LinkedIn */}
+            {/* LINKEDIN */}
 
             <a
               href="https://www.linkedin.com/in/madhu-sailesh-sasamal-6918912a4/"
@@ -292,10 +464,10 @@ function Hero() {
               <FaLinkedin />
             </a>
 
-            {/* Instagram */}
+            {/* INSTAGRAM */}
 
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/madhu_sailesh/"
               target="_blank"
               rel="noreferrer"
               className="
@@ -307,10 +479,8 @@ function Hero() {
             >
               <FaInstagram />
             </a>
-          </div>
+          </motion.div>
         </motion.div>
-
-        {/* RIGHT SPLINE */}
 
         {/* RIGHT SPLINE */}
 
@@ -328,48 +498,49 @@ function Hero() {
             duration: 1.2,
           }}
           className="
-    relative
-    w-full
-    flex
-    items-center
-    justify-center
-    mt-4
-    lg:mt-0
-  "
+            relative
+            w-full
+            flex
+            items-center
+            justify-center
+            mt-4
+            lg:mt-0
+          "
         >
-          {/* Glow Background */}
+          
+          {/* GLOW */}
 
           <div
             className="
-      absolute
-      w-[260px]
-      h-[260px]
-      sm:w-[380px]
-      sm:h-[380px]
-      md:w-[500px]
-      md:h-[500px]
-      bg-blue-500/10
-      blur-[120px]
-      rounded-full
-    "
+              absolute
+              w-[260px]
+              h-[260px]
+              sm:w-[380px]
+              sm:h-[380px]
+              md:w-[500px]
+              md:h-[500px]
+              bg-blue-500/10
+              blur-[120px]
+              rounded-full
+            "
           ></div>
 
-          {/* Spline Container */}
+          {/* SPLINE BOX */}
 
           <div
             className="
-      w-full
-      h-[300px]
-      sm:h-[420px]
-      md:h-[520px]
-      lg:h-[620px]
-      xl:h-[700px]
-      max-w-[700px]
-      overflow-hidden
-      rounded-[30px]
-      relative
-      z-10
-    "
+              w-full
+              h-[300px]
+              sm:h-[420px]
+              md:h-[520px]
+              lg:h-[620px]
+              xl:h-[700px]
+              max-w-[700px]
+              overflow-hidden
+              rounded-[30px]
+              relative
+              z-10
+            "
           >
             <Spline scene="https://prod.spline.design/uW7Mx7Zqf3dOh334/scene.splinecode" />
           </div>

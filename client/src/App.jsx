@@ -16,7 +16,7 @@ import AdminProjects from "./pages/AdminProjects";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import Loader from "./components/Loader";
-
+import MusicPlayer from "./components/MusicPlayer";
 function App() {
   const [loading, setLoading] =
     useState(true);
@@ -36,7 +36,7 @@ function App() {
 
   return (
     <div className="bg-black text-white min-h-screen">
-      
+      <MusicPlayer />
       <Routes>
         
         {/* PUBLIC */}
