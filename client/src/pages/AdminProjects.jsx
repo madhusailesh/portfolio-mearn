@@ -31,6 +31,24 @@ function AdminProjects() {
   useEffect(() => {
     fetchProjects();
   }, []);
+  // delet project
+  const deleteProject = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await API.delete(`/projects/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      fetchProjects();
+
+      alert("Project Deleted");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Handle Input Change
 
@@ -54,15 +72,13 @@ function AdminProjects() {
         {
           ...formData,
 
-          techStack: formData.techStack
-            .split(",")
-            .map((tech) => tech.trim()),
+          techStack: formData.techStack.split(",").map((tech) => tech.trim()),
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       alert("Project Added Successfully");
@@ -91,16 +107,11 @@ function AdminProjects() {
       <div>
         {/* Heading */}
 
-        <h1 className="text-4xl font-bold mb-10">
-          Manage Projects
-        </h1>
+        <h1 className="text-4xl font-bold mb-10">Manage Projects</h1>
 
         {/* Add Project Form */}
 
-        <form
-          onSubmit={handleSubmit}
-          className="grid gap-4 max-w-[700px]"
-        >
+        <form onSubmit={handleSubmit} className="grid gap-4 max-w-[700px]">
           <input
             type="text"
             name="title"
@@ -165,9 +176,7 @@ function AdminProjects() {
         {/* All Projects */}
 
         <div className="mt-20">
-          <h2 className="text-3xl font-bold mb-6">
-            All Projects
-          </h2>
+          <h2 className="text-3xl font-bold mb-6">All Projects</h2>
 
           <div className="grid gap-5">
             {projects.length > 0 ? (
@@ -177,7 +186,6 @@ function AdminProjects() {
                   className="bg-zinc-900 p-5 rounded-xl border border-zinc-800"
                 >
                   {/* Image */}
-
                   {project.image && (
                     <img
                       src={project.image}
@@ -185,21 +193,11 @@ function AdminProjects() {
                       className="w-full h-[250px] object-cover rounded-lg mb-5"
                     />
                   )}
-
                   {/* Title */}
-
-                  <h3 className="text-2xl font-bold">
-                    {project.title}
-                  </h3>
-
+                  <h3 className="text-2xl font-bold">{project.title}</h3>
                   {/* Description */}
-
-                  <p className="text-zinc-400 mt-3">
-                    {project.description}
-                  </p>
-
+                  <p className="text-zinc-400 mt-3">{project.description}</p>
                   {/* Tech Stack */}
-
                   <div className="flex flex-wrap gap-2 mt-5">
                     {project.techStack.map((tech, index) => (
                       <span
@@ -210,9 +208,7 @@ function AdminProjects() {
                       </span>
                     ))}
                   </div>
-
                   {/* Links */}
-
                   <div className="flex gap-4 mt-6">
                     {project.githubLink && (
                       <a
@@ -236,12 +232,17 @@ function AdminProjects() {
                       </a>
                     )}
                   </div>
+                  {/* delete button */}
+                  <button
+                    onClick={() => deleteProject(project._id)}
+                    className="bg-red-500 px-4 py-2 rounded mt-4"
+                  >
+                    Delete
+                  </button>
                 </div>
               ))
             ) : (
-              <p className="text-zinc-500">
-                No Projects Found
-              </p>
+              <p className="text-zinc-500">No Projects Found</p>
             )}
           </div>
         </div>
