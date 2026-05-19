@@ -116,7 +116,7 @@ await transporter.sendMail({
         </a>
 
         <a
-          href="https://linkedin.com"
+          href="https://www.linkedin.com/in/madhu-sailesh-sasamal-6918912a4/"
           style="
             display:inline-block;
             padding:12px 20px;
