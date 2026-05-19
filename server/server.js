@@ -8,7 +8,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
-
+import contactRoutes from "./routes/contactRoutes.js";
  
 
 connectDB();
@@ -22,7 +22,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/projects", projectRoutes);
 
 app.use("/api/auth", authRoutes);
-
+app.use(
+  "/api/contact",
+  contactRoutes
+);
 app.get("/", (req, res) => {
   res.send("API Running...");
 });
