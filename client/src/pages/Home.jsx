@@ -5,6 +5,8 @@ import API from "../services/api";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 import About from "../components/About";
+import Skills from "../components/Skills";
+import Experience from "../components/Experience";
 function Home() {
   const [projects, setProjects] = useState([]);
 
@@ -33,6 +35,12 @@ function Home() {
       {/* ABOUT */}
 
       <About />
+
+        {/* SKILLS */}
+      <Skills />
+      {/* EXPERIENCE */}
+
+      <Experience />
 
       {/* PROJECTS */}
 
