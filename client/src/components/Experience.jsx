@@ -2,60 +2,161 @@ import { motion } from "framer-motion";
 
 const experiences = [
   {
+    role: "Software Engineer",
+    company: "PawnRace Academy",
+    year: "Sep 2025 - Present",
+    type: "Part-time • Hybrid",
+
+    description:
+      "Built responsive UI components for the chess learning platform and integrated frontend with backend APIs using React.js and MongoDB.",
+
+    skills: [
+      "React.js",
+      "MongoDB",
+      "Node.js",
+      "Tailwind CSS",
+    ],
+  },
+
+  {
+    role: "Senior Associate of E-Cell Tech",
+    company: "Entrepreneurship Cell, VSSUT",
+    year: "Feb 2026 - Present",
+    type: "On-site",
+
+    description:
+      "Leading and coordinating the tech team of E-Cell VSSUT while developing and maintaining event platforms and internal systems.",
+
+    skills: [
+      "Node.js",
+      "Next.js",
+      "MongoDB",
+      "Team Leadership",
+    ],
+  },
+
+  {
+    role: "Tech Team Member",
+    company: "Enigma - VSSUT",
+    year: "May 2025 - Present",
+    type: "On-site",
+
+    description:
+      "Worked on frontend development, event web platforms, and modern UI systems for technical fest initiatives.",
+
+    skills: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "React.js",
+    ],
+  },
+
+  {
     role: "Full Stack Developer",
     company: "Personal Projects",
     year: "2025 - Present",
-    description:
-      "Building realtime MERN applications, admin dashboards, portfolio systems, and modern animated web experiences.",
-  },
+    type: "Remote",
 
-  {
-    role: "Frontend Developer",
-    company: "Freelance Learning",
-    year: "2024 - 2025",
     description:
-      "Created responsive websites using React, Tailwind CSS, JavaScript, and advanced UI animation libraries.",
-  },
+      "Building realtime MERN applications, admin dashboards, AI portfolio systems, and futuristic animated web experiences.",
 
-  {
-    role: "Programming & DSA",
-    company: "C++ / Problem Solving",
-    year: "2024 - Present",
-    description:
-      "Learning data structures, algorithms, competitive programming, and backend architecture.",
+    skills: [
+      "MERN",
+      "Socket.io",
+      "Firebase",
+      "GSAP",
+    ],
   },
 ];
 
 function Experience() {
   return (
-    <section className="bg-black text-white py-20 md:py-28 lg:py-32 px-6 md:px-10 lg:px-20 relative overflow-hidden">
+    <section
+      className="
+        bg-black
+        text-white
+        py-20
+        md:py-28
+        lg:py-32
+        px-6
+        md:px-10
+        lg:px-20
+        relative
+        overflow-hidden
+      "
+    >
       
       {/* Glow */}
 
-      <div className="absolute top-0 left-0 w-[250px] md:w-[350px] h-[250px] md:h-[350px] bg-pink-500 opacity-10 blur-[120px] rounded-full"></div>
+      <div
+        className="
+          absolute
+          top-0
+          left-0
+          w-[250px]
+          md:w-[350px]
+          h-[250px]
+          md:h-[350px]
+          bg-pink-500
+          opacity-10
+          blur-[120px]
+          rounded-full
+        "
+      ></div>
 
       {/* Container */}
 
-      <div className="max-w-[1200px] mx-auto relative z-10">
+      <div className="max-w-[1300px] mx-auto relative z-10">
         
         {/* Heading */}
 
         <div className="mb-16 md:mb-24">
           
-          <p className="text-pink-500 uppercase tracking-[4px] md:tracking-[6px] text-sm md:text-base mb-4">
+          <p
+            className="
+              text-pink-500
+              uppercase
+              tracking-[4px]
+              md:tracking-[6px]
+              text-sm
+              md:text-base
+              mb-4
+            "
+          >
             Experience
           </p>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+          <h2
+            className="
+              text-3xl
+              sm:text-4xl
+              md:text-5xl
+              lg:text-6xl
+              font-bold
+              leading-tight
+            "
+          >
             My Journey
           </h2>
         </div>
 
         {/* Timeline */}
 
-        <div className="relative border-l border-zinc-800 ml-3 md:ml-6 space-y-14 md:space-y-20">
+        <div
+          className="
+            relative
+            border-l
+            border-zinc-800
+            ml-3
+            md:ml-6
+            space-y-14
+            md:space-y-20
+          "
+        >
           
           {experiences.map((item, index) => (
+            
             <motion.div
               key={index}
               initial={{
@@ -71,40 +172,146 @@ function Experience() {
                 delay: index * 0.2,
               }}
               viewport={{ once: true }}
-              className="relative pl-10 md:pl-14"
+              className="
+                relative
+                pl-10
+                md:pl-14
+              "
             >
               
               {/* Timeline Dot */}
 
-              <div className="absolute -left-[10px] md:-left-[13px] top-2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-gradient-to-r from-pink-500 to-blue-500 shadow-[0_0_20px_rgba(236,72,153,0.8)]"></div>
+              <div
+                className="
+                  absolute
+                  -left-[10px]
+                  md:-left-[13px]
+                  top-2
+                  w-5
+                  h-5
+                  md:w-6
+                  md:h-6
+                  rounded-full
+                  bg-gradient-to-r
+                  from-pink-500
+                  to-blue-500
+                  shadow-[0_0_20px_rgba(236,72,153,0.8)]
+                "
+              ></div>
 
               {/* Card */}
 
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl md:rounded-3xl p-6 md:p-8 hover:border-pink-500 transition duration-300">
+              <div
+                className="
+                  bg-zinc-900/70
+                  backdrop-blur-xl
+                  border
+                  border-zinc-800
+                  rounded-2xl
+                  md:rounded-3xl
+                  p-6
+                  md:p-8
+                  hover:border-pink-500
+                  hover:-translate-y-2
+                  transition
+                  duration-300
+                "
+              >
                 
                 {/* Year */}
 
-                <span className="text-sm md:text-base text-pink-500 font-medium">
-                  {item.year}
-                </span>
+                <div className="flex flex-wrap gap-3 items-center">
+                  
+                  <span
+                    className="
+                      text-sm
+                      md:text-base
+                      text-pink-500
+                      font-medium
+                    "
+                  >
+                    {item.year}
+                  </span>
+
+                  <span
+                    className="
+                      text-xs
+                      md:text-sm
+                      px-3
+                      py-1
+                      rounded-full
+                      bg-zinc-800
+                      text-zinc-300
+                    "
+                  >
+                    {item.type}
+                  </span>
+                </div>
 
                 {/* Role */}
 
-                <h3 className="text-2xl md:text-3xl font-bold mt-3">
+                <h3
+                  className="
+                    text-2xl
+                    md:text-3xl
+                    font-bold
+                    mt-4
+                  "
+                >
                   {item.role}
                 </h3>
 
                 {/* Company */}
 
-                <h4 className="text-zinc-400 text-base md:text-lg mt-2">
+                <h4
+                  className="
+                    text-zinc-400
+                    text-base
+                    md:text-lg
+                    mt-2
+                  "
+                >
                   {item.company}
                 </h4>
 
                 {/* Description */}
 
-                <p className="text-zinc-500 leading-relaxed mt-5 text-sm md:text-base">
+                <p
+                  className="
+                    text-zinc-500
+                    leading-relaxed
+                    mt-5
+                    text-sm
+                    md:text-base
+                  "
+                >
                   {item.description}
                 </p>
+
+                {/* Skills */}
+
+                <div className="flex flex-wrap gap-3 mt-6">
+                  
+                  {item.skills.map(
+                    (skill, idx) => (
+                      <span
+                        key={idx}
+                        className="
+                          px-4
+                          py-2
+                          rounded-full
+                          bg-zinc-800
+                          border
+                          border-zinc-700
+                          text-sm
+                          text-zinc-300
+                        "
+                      >
+                        {skill}
+                      </span>
+                    )
+                  )}
+                </div>
               </div>
             </motion.div>
           ))}

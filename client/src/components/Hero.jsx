@@ -1,17 +1,10 @@
 import { motion } from "framer-motion";
 
-import {
-  FaGithub,
-  FaLinkedin,
-  FaInstagram,
-} from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 import Spline from "@splinetool/react-spline";
 
-import {
-  useEffect,
-  useRef,
-} from "react";
+import { useEffect, useRef } from "react";
 
 import gsap from "gsap";
 
@@ -21,13 +14,9 @@ function Hero() {
   useEffect(() => {
     gsap.to(heroRef.current, {
       y: -25,
-
       duration: 3,
-
       repeat: -1,
-
       yoyo: true,
-
       ease: "sine.inOut",
     });
   }, []);
@@ -51,7 +40,6 @@ function Hero() {
         lg:pt-0
       "
     >
-      
       {/* Glow Effects */}
 
       <div
@@ -105,7 +93,6 @@ function Hero() {
           z-10
         "
       >
-        
         {/* LEFT CONTENT */}
 
         <motion.div
@@ -122,7 +109,6 @@ function Hero() {
           }}
           className="text-center lg:text-left"
         >
-          
           {/* Intro */}
 
           <p
@@ -150,7 +136,6 @@ function Hero() {
             "
           >
             I'm{" "}
-
             <span
               className="
                 text-transparent
@@ -194,11 +179,8 @@ function Hero() {
               md:text-lg
             "
           >
-            I build futuristic full stack
-            web experiences with modern
-            technologies, smooth
-            animations, and scalable
-            backend systems.
+            I build futuristic full stack web experiences with modern
+            technologies, smooth animations, and scalable backend systems.
           </p>
 
           {/* Buttons */}
@@ -215,7 +197,6 @@ function Hero() {
               lg:justify-start
             "
           >
-            
             {/* Projects Button */}
 
             <button
@@ -279,7 +260,6 @@ function Hero() {
               lg:justify-start
             "
           >
-            
             {/* GitHub */}
 
             <a
@@ -332,6 +312,8 @@ function Hero() {
 
         {/* RIGHT SPLINE */}
 
+        {/* RIGHT SPLINE */}
+
         <motion.div
           ref={heroRef}
           initial={{
@@ -346,19 +328,51 @@ function Hero() {
             duration: 1.2,
           }}
           className="
-            h-[350px]
-            sm:h-[450px]
-            md:h-[550px]
-            lg:h-[700px]
-            w-full
-            rounded-[40px]
-            overflow-hidden
-            border
-            border-zinc-900
-            shadow-[0_0_80px_rgba(59,130,246,0.12)]
-          "
+    relative
+    w-full
+    flex
+    items-center
+    justify-center
+    mt-4
+    lg:mt-0
+  "
         >
-          <Spline scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode" />
+          {/* Glow Background */}
+
+          <div
+            className="
+      absolute
+      w-[260px]
+      h-[260px]
+      sm:w-[380px]
+      sm:h-[380px]
+      md:w-[500px]
+      md:h-[500px]
+      bg-blue-500/10
+      blur-[120px]
+      rounded-full
+    "
+          ></div>
+
+          {/* Spline Container */}
+
+          <div
+            className="
+      w-full
+      h-[300px]
+      sm:h-[420px]
+      md:h-[520px]
+      lg:h-[620px]
+      xl:h-[700px]
+      max-w-[700px]
+      overflow-hidden
+      rounded-[30px]
+      relative
+      z-10
+    "
+          >
+            <Spline scene="https://prod.spline.design/uW7Mx7Zqf3dOh334/scene.splinecode" />
+          </div>
         </motion.div>
       </div>
     </section>

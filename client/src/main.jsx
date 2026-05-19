@@ -11,7 +11,7 @@ import CustomCursor from "./components/CustomCursor";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Toaster />
-    <SmoothScroll />/
+    <SmoothScroll />
     <CustomCursor />
     <App />
     

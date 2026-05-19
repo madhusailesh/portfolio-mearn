@@ -5,6 +5,8 @@ import {
   FaCss3Alt,
   FaJs,
   FaGitAlt,
+  FaBootstrap,
+  FaPython,
 } from "react-icons/fa";
 
 import {
@@ -13,12 +15,20 @@ import {
   SiTailwindcss,
   SiFirebase,
   SiCplusplus,
+  SiRedux,
+  SiSocketdotio,
+  SiNextdotjs,
 } from "react-icons/si";
 
 const skills = [
   {
     name: "React",
     icon: <FaReact />,
+  },
+
+  {
+    name: "Next.js",
+    icon: <SiNextdotjs />,
   },
 
   {
@@ -42,6 +52,16 @@ const skills = [
   },
 
   {
+    name: "Redux",
+    icon: <SiRedux />,
+  },
+
+  {
+    name: "Socket.io",
+    icon: <SiSocketdotio />,
+  },
+
+  {
     name: "HTML",
     icon: <FaHtml5 />,
   },
@@ -49,6 +69,11 @@ const skills = [
   {
     name: "CSS",
     icon: <FaCss3Alt />,
+  },
+
+  {
+    name: "Bootstrap",
+    icon: <FaBootstrap />,
   },
 
   {
@@ -67,9 +92,54 @@ const skills = [
   },
 
   {
+    name: "Python",
+    icon: <FaPython />,
+  },
+
+  {
     name: "C++",
     icon: <SiCplusplus />,
   },
+
+  {
+    name: "REST APIs",
+    icon: "⚡",
+  },
+
+  {
+    name: "Realtime Apps",
+    icon: "🚀",
+  },
+
+  {
+    name: "GPS Tracking",
+    icon: "📍",
+  },
+
+  {
+    name: "Geolocation API",
+    icon: "🌍",
+  },
+
+   
+
+  {
+    name: "OpenStreetMap",
+    icon: "🗺️",
+  },
+
+  
+
+  {
+    name: "Web Development",
+    icon: "💻",
+  },
+
+  
+
+   
+
+  
 ];
 
 function Skills() {
@@ -149,7 +219,7 @@ function Skills() {
 
                   {/* NAME */}
 
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-semibold">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-center px-2">
                     {skill.name}
                   </h3>
                 </div>
