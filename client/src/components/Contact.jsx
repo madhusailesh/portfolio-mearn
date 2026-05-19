@@ -124,7 +124,7 @@ function Contact() {
             </a>
 
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/madhu-sailesh-sasamal-6918912a4/"
               target="_blank"
               rel="noreferrer"
               className="hover:text-blue-500 transition"
@@ -133,7 +133,7 @@ function Contact() {
             </a>
 
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/madhu_sailesh/"
               target="_blank"
               rel="noreferrer"
               className="hover:text-pink-400 transition"
