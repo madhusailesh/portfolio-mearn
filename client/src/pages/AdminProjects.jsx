@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
 
 import API from "../services/api";
-
+import toast from "react-hot-toast";
 function AdminProjects() {
   const [projects, setProjects] = useState([]);
 
@@ -15,7 +15,7 @@ function AdminProjects() {
     liveLink: "",
     image: "",
   });
-
+  const [editingId, setEditingId] = useState(null);
   // Fetch Projects
 
   const fetchProjects = async () => {
@@ -44,7 +44,7 @@ function AdminProjects() {
 
       fetchProjects();
 
-      alert("Project Deleted");
+      toast.success("Project Deleted");
     } catch (error) {
       console.log(error);
     }
@@ -62,46 +62,71 @@ function AdminProjects() {
   // Handle Submit
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const token = localStorage.getItem("token");
+  try {
+    const token = localStorage.getItem("token");
 
-      await API.post(
-        "/projects",
-        {
-          ...formData,
+    const projectData = new FormData();
 
-          techStack: formData.techStack.split(",").map((tech) => tech.trim()),
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+    projectData.append("title", formData.title);
 
-      alert("Project Added Successfully");
+    projectData.append(
+      "description",
+      formData.description
+    );
 
-      // Refresh Projects
+    projectData.append(
+      "techStack",
+      JSON.stringify(
+        formData.techStack
+          .split(",")
+          .map((tech) => tech.trim())
+      )
+    );
 
-      fetchProjects();
+    projectData.append(
+      "githubLink",
+      formData.githubLink
+    );
 
-      // Reset Form
+    projectData.append(
+      "liveLink",
+      formData.liveLink
+    );
 
-      setFormData({
-        title: "",
-        description: "",
-        techStack: "",
-        githubLink: "",
-        liveLink: "",
-        image: "",
-      });
-    } catch (error) {
-      console.log(error);
+    // only if image exists
+
+    if (formData.image) {
+      projectData.append("image", formData.image);
     }
-  };
 
+    for (let pair of projectData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
+    await API.post("/projects", projectData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    toast.success("Project Added");
+
+    fetchProjects();
+
+    setFormData({
+      title: "",
+      description: "",
+      techStack: "",
+      githubLink: "",
+      liveLink: "",
+      image: null,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
   return (
     <DashboardLayout>
       <div>
@@ -160,16 +185,19 @@ function AdminProjects() {
           />
 
           <input
-            type="text"
+            type="file"
             name="image"
-            placeholder="Image URL"
-            value={formData.image}
-            onChange={handleChange}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                image: e.target.files[0],
+              })
+            }
             className="p-3 bg-zinc-900 rounded outline-none"
           />
 
           <button className="bg-white text-black p-3 rounded font-semibold hover:bg-zinc-300 transition">
-            Add Project
+            {editingId ? "Update Project" : "Add Project"}
           </button>
         </form>
 
@@ -238,6 +266,26 @@ function AdminProjects() {
                     className="bg-red-500 px-4 py-2 rounded mt-4"
                   >
                     Delete
+                  </button>
+
+                  {/* edit button */}
+
+                  <button
+                    onClick={() => {
+                      setEditingId(project._id);
+
+                      setFormData({
+                        title: project.title,
+                        description: project.description,
+                        techStack: project.techStack.join(", "),
+                        githubLink: project.githubLink,
+                        liveLink: project.liveLink,
+                        image: project.image,
+                      });
+                    }}
+                    className="bg-yellow-500 px-4 py-2 rounded mt-4 ml-4"
+                  >
+                    Edit
                   </button>
                 </div>
               ))
