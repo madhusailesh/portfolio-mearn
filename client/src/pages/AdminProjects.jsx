@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, useRef } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
-
 import API from "../services/api";
 import toast from "react-hot-toast";
+
 function AdminProjects() {
   const [projects, setProjects] = useState([]);
+  const fileInputRef = useRef(null); // File input ko programmatically reset karne ke liye
 
   const [formData, setFormData] = useState({
     title: "",
@@ -15,43 +15,37 @@ function AdminProjects() {
     liveLink: "",
     image: "",
   });
+  
   const [editingId, setEditingId] = useState(null);
-  // Fetch Projects
 
+  // Fetch Projects from Backend
   const fetchProjects = async () => {
     try {
       const { data } = await API.get("/projects");
-
       setProjects(data);
     } catch (error) {
       console.log(error);
+      toast.error("Failed to fetch projects");
     }
   };
 
   useEffect(() => {
     fetchProjects();
   }, []);
-  // delet project
+
+  // Delete Project
   const deleteProject = async (id) => {
     try {
-      const token = localStorage.getItem("token");
-
-      await API.delete(`/projects/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      await API.delete(`/projects/${id}`);
       fetchProjects();
-
       toast.success("Project Deleted");
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || "Failed to delete project");
     }
   };
 
   // Handle Input Change
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -59,83 +53,80 @@ function AdminProjects() {
     });
   };
 
-  // Handle Submit
-
+  // Handle Form Submit (Add or Update)
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const token = localStorage.getItem("token");
+    try {
+      const projectData = new FormData();
+      projectData.append("title", formData.title);
+      projectData.append("description", formData.description);
+      
+      // Tech stack ko valid comma-separated string se array bana kar stringify karna
+      projectData.append(
+        "techStack",
+        JSON.stringify(
+          formData.techStack
+            .split(",")
+            .map((tech) => tech.trim())
+            .filter((tech) => tech !== "")
+        )
+      );
 
-    const projectData = new FormData();
+      projectData.append("githubLink", formData.githubLink || "");
+      projectData.append("liveLink", formData.liveLink || "");
 
-    projectData.append("title", formData.title);
+      // Agar new image file chunk select hui hai tabhi append karenge
+      if (formData.image && typeof formData.image !== "string") {
+        projectData.append("image", formData.image);
+      }
 
-    projectData.append(
-      "description",
-      formData.description
-    );
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
 
-    projectData.append(
-      "techStack",
-      JSON.stringify(
-        formData.techStack
-          .split(",")
-          .map((tech) => tech.trim())
-      )
-    );
+      if (editingId) {
+        // Edit mode handle karega
+        await API.put(`/projects/${editingId}`, projectData, config);
+        toast.success("Project Updated Successfully");
+        setEditingId(null);
+      } else {
+        // Add new project mode
+        await API.post("/projects", projectData, config);
+        toast.success("Project Added Successfully");
+      }
 
-    projectData.append(
-      "githubLink",
-      formData.githubLink
-    );
+      // Refresh list and clear state
+      fetchProjects();
+      setFormData({
+        title: "",
+        description: "",
+        techStack: "",
+        githubLink: "",
+        liveLink: "",
+        image: null,
+      });
 
-    projectData.append(
-      "liveLink",
-      formData.liveLink
-    );
-
-    // only if image exists
-
-    if (formData.image) {
-      projectData.append("image", formData.image);
+      // Visual UI par selected file ka name reset karne ke liye
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
+  };
 
-    for (let pair of projectData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
-
-    await API.post("/projects", projectData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    toast.success("Project Added");
-
-    fetchProjects();
-
-    setFormData({
-      title: "",
-      description: "",
-      techStack: "",
-      githubLink: "",
-      liveLink: "",
-      image: null,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
   return (
     <DashboardLayout>
       <div>
         {/* Heading */}
-
         <h1 className="text-4xl font-bold mb-10">Manage Projects</h1>
 
-        {/* Add Project Form */}
-
+        {/* Add / Edit Project Form */}
         <form onSubmit={handleSubmit} className="grid gap-4 max-w-[700px]">
           <input
             type="text"
@@ -187,6 +178,7 @@ function AdminProjects() {
           <input
             type="file"
             name="image"
+            ref={fileInputRef}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -196,13 +188,35 @@ function AdminProjects() {
             className="p-3 bg-zinc-900 rounded outline-none"
           />
 
-          <button className="bg-white text-black p-3 rounded font-semibold hover:bg-zinc-300 transition">
-            {editingId ? "Update Project" : "Add Project"}
-          </button>
+          <div className="flex gap-4">
+            <button className="bg-white text-black p-3 rounded font-semibold hover:bg-zinc-300 transition flex-1">
+              {editingId ? "Update Project" : "Add Project"}
+            </button>
+            
+            {editingId && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingId(null);
+                  setFormData({
+                    title: "",
+                    description: "",
+                    techStack: "",
+                    githubLink: "",
+                    liveLink: "",
+                    image: null,
+                  });
+                  if (fileInputRef.current) fileInputRef.current.value = "";
+                }}
+                className="bg-zinc-700 text-white p-3 rounded font-semibold hover:bg-zinc-600 transition"
+              >
+                Cancel Edit
+              </button>
+            )}
+          </div>
         </form>
 
-        {/* All Projects */}
-
+        {/* All Projects Grid Section */}
         <div className="mt-20">
           <h2 className="text-3xl font-bold mb-6">All Projects</h2>
 
@@ -213,7 +227,7 @@ function AdminProjects() {
                   key={project._id}
                   className="bg-zinc-900 p-5 rounded-xl border border-zinc-800"
                 >
-                  {/* Image */}
+                  {/* Image render */}
                   {project.image && (
                     <img
                       src={project.image}
@@ -225,18 +239,22 @@ function AdminProjects() {
                   <h3 className="text-2xl font-bold">{project.title}</h3>
                   {/* Description */}
                   <p className="text-zinc-400 mt-3">{project.description}</p>
-                  {/* Tech Stack */}
+                  {/* Tech Stack Array Mapping */}
                   <div className="flex flex-wrap gap-2 mt-5">
-                    {project.techStack.map((tech, index) => (
-                      <span
-                        key={index}
-                        className="bg-zinc-800 px-3 py-1 rounded-full text-sm"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                    {project.techStack && Array.isArray(project.techStack) ? (
+                      project.techStack.map((tech, index) => (
+                        <span
+                          key={index}
+                          className="bg-zinc-800 px-3 py-1 rounded-full text-sm"
+                        >
+                          {tech}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-zinc-500 text-sm">No tech stack added</span>
+                    )}
                   </div>
-                  {/* Links */}
+                  {/* Project External Links */}
                   <div className="flex gap-4 mt-6">
                     {project.githubLink && (
                       <a
@@ -260,33 +278,33 @@ function AdminProjects() {
                       </a>
                     )}
                   </div>
-                  {/* delete button */}
-                  <button
-                    onClick={() => deleteProject(project._id)}
-                    className="bg-red-500 px-4 py-2 rounded mt-4"
-                  >
-                    Delete
-                  </button>
+                  
+                  {/* Action Buttons */}
+                  <div className="mt-4 flex gap-3">
+                    <button
+                      onClick={() => deleteProject(project._id)}
+                      className="bg-red-500 hover:bg-red-600 transition px-4 py-2 rounded"
+                    >
+                      Delete
+                    </button>
 
-                  {/* edit button */}
-
-                  <button
-                    onClick={() => {
-                      setEditingId(project._id);
-
-                      setFormData({
-                        title: project.title,
-                        description: project.description,
-                        techStack: project.techStack.join(", "),
-                        githubLink: project.githubLink,
-                        liveLink: project.liveLink,
-                        image: project.image,
-                      });
-                    }}
-                    className="bg-yellow-500 px-4 py-2 rounded mt-4 ml-4"
-                  >
-                    Edit
-                  </button>
+                    <button
+                      onClick={() => {
+                        setEditingId(project._id);
+                        setFormData({
+                          title: project.title,
+                          description: project.description,
+                          techStack: Array.isArray(project.techStack) ? project.techStack.join(", ") : project.techStack,
+                          githubLink: project.githubLink || "",
+                          liveLink: project.liveLink || "",
+                          image: project.image, // URL safe storage
+                        });
+                      }}
+                      className="bg-yellow-500 hover:bg-yellow-600 text-black transition px-4 py-2 rounded"
+                    >
+                      Edit
+                    </button>
+                  </div>
                 </div>
               ))
             ) : (

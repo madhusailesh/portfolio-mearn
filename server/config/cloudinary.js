@@ -1,17 +1,7 @@
 import "./env.js";
 
 import { v2 as cloudinary } from "cloudinary";
-
-console.log(
-  "Cloud Name:",
-  process.env.CLOUDINARY_CLOUD_NAME
-);
-
-console.log(
-  "API Key:",
-  process.env.CLOUDINARY_API_KEY
-);
-
+ 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 
