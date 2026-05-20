@@ -34,7 +34,8 @@ export const sendMessage = async (
           pass: process.env.EMAIL_PASS,
         },
       });
-
+console.log(process.env.EMAIL_USER);
+console.log(process.env.EMAIL_PASS);
     // VERIFY SMTP
 
     await transporter.verify();
