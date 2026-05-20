@@ -26,7 +26,7 @@ export const sendMessage = async (
 
         port: 465,
 
-        secure: true,
+        secure: false,
 
         auth: {
           user: process.env.EMAIL_USER,
